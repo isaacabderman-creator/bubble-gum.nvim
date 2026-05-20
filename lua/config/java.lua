@@ -16,11 +16,6 @@ local function project_root(bufnr)
 	local root = vim.fs.root(bufnr or 0, {
 		"gradlew",
 		"mvnw",
-		"pom.xml",
-		"build.gradle",
-		"build.gradle.kts",
-		"settings.gradle",
-		"settings.gradle.kts",
 		".git",
 	})
 	if root and root ~= "" then
