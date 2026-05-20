@@ -1,11 +1,11 @@
 return {
   {
-    name = "matugen-colorscheme",
+    name = "tmux-colorscheme",
     dir = vim.fn.stdpath("config"),
     lazy = false,
-    priority = 1000,              
+    priority = 1000,
     config = function()
-      vim.cmd("colorscheme matugen")
+      vim.cmd("colorscheme tmux")
     end,
   },
 }
