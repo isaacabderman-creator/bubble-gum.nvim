@@ -1,7 +1,7 @@
 # Neovim config with a tmux-synced Material Dark theme
 
 This is a personal Neovim config that matches the Material Dark palette used by tmux.
-It includes the folllowing basic utilities:
+It includes the following basic utilities:
 - Telescope
 - Tree-sitter
 - LSP
