@@ -7,6 +7,7 @@ return {
       formatters_by_ft = {
         lua        = { "stylua" },
         python     = { "black" },
+        java       = { "google-java-format" },
         javascript = { "prettier" },
         typescript = { "prettier" },
         tsx        = { "prettier" },

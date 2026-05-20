@@ -1,40 +1,49 @@
 return {
-  {
-    "hrsh7th/nvim-cmp",
-    event = "InsertEnter",
-    dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-path",
-      -- Explicitly list LuaSnip here
-      {
-        "L3MON4D3/LuaSnip",
-        dependencies = { "rafamadriz/friendly-snippets" },
-      },
-      "saadparwaiz1/cmp_luasnip", -- Crucial: bridge between cmp and luasnip
-    },
-    config = function()
-      local cmp = require("cmp")
-      local luasnip = require("luasnip") -- Now this will work because it's a dependency
+	{
+		"saghen/blink.cmp",
+		version = "v1.*",
+		lazy = false,
+		build = "cargo build --release",
+		dependencies = {
+			"L3MON4D3/LuaSnip",
+			"rafamadriz/friendly-snippets",
+		},
+		opts = {
+			keymap = {
+				preset = "none",
+				["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+				["<C-e>"] = { "hide" },
+				["<CR>"] = { "accept", "fallback" },
+				["<Up>"] = { "select_prev", "fallback" },
+				["<Down>"] = { "select_next", "fallback" },
+				["<C-n>"] = { "select_next", "fallback" },
+				["<C-p>"] = { "select_prev", "fallback" },
+			},
 
-      cmp.setup({
-        snippet = {
-          expand = function(args)
-            luasnip.lsp_expand(args.body)
-          end,
-        },
-        mapping = cmp.mapping.preset.insert({
-          ["<C-Space>"] = cmp.mapping.complete(),
-          ["<CR>"] = cmp.mapping.confirm({ select = true }),
-          ["<Tab>"] = cmp.mapping.select_next_item(),
-        }),
-        sources = cmp.config.sources({
-          { name = "nvim_lsp" },
-          { name = "luasnip" }, -- Add this to actually use the snippets
-          { name = "buffer" },
-          { name = "path" },
-        }),
-      })
-    end,
-  },
+			appearance = {
+				nerd_font_variant = "mono",
+				use_nvim_cmp_as_default = true,
+			},
+
+			completion = {
+				accept = {
+					auto_brackets = { enabled = true },
+				},
+				documentation = { auto_show = true, auto_show_delay_ms = 200 },
+			},
+
+			sources = {
+				default = { "lsp", "path", "snippets", "buffer" },
+			},
+
+			snippets = { preset = "luasnip" },
+
+			signature = { enabled = true },
+		},
+
+		config = function(_, opts)
+			require("luasnip.loaders.from_vscode").lazy_load()
+			require("blink.cmp").setup(opts)
+		end,
+	},
 }

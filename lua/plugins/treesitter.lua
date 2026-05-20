@@ -2,8 +2,8 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    config = function()
-      local configs = require("nvim-treesitter")
+		config = function()
+			local configs = require("nvim-treesitter.configs")
       configs.setup({
         ensure_installed = { 
           "lua", "vim", "vimdoc", "query", "bash", 
@@ -12,7 +12,10 @@ return {
           "javascript",
           "typescript",
           "tsx",
-          "java"
+          "java",
+          "html",
+          "svelte",
+          "css"
         },
         
         auto_install = true,
