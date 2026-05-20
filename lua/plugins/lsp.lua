@@ -11,7 +11,7 @@ return {
 			{
 				"WhoIsSethDaniel/mason-tool-installer.nvim",
 				opts = {
-					ensure_installed = { "stylua", "black", "prettier", "google-java-format", "java-debug-adapter", "java-test" },
+					ensure_installed = { "stylua", "black", "prettier" },
 				},
 			},
 		},
@@ -19,7 +19,7 @@ return {
 		config = function()
 			require("mason").setup()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "pyright", "svelte", "html", "cssls", "jdtls", "ts_ls", "jsonls", "emmet_language_server" },
+				ensure_installed = { "lua_ls", "pyright", "svelte", "html", "cssls", "lemminx", "ts_ls", "jsonls", "emmet_language_server" },
 			})
 
 			-- blink.cmp capabilities (replaces the old cmp_nvim_lsp)
@@ -61,8 +61,14 @@ return {
 				filetypes = { "html", "css" },
 			})
 
+			vim.lsp.config("lemminx", {
+				capabilities = capabilities,
+				filetypes = { "xml" },
+				root_markers = { "pom.xml", "build.xml", ".git" },
+			})
+
 			-- Enable all servers
-			vim.lsp.enable({ "lua_ls", "pyright", "svelte", "html", "cssls", "ts_ls", "jsonls", "emmet_language_server" })
+			vim.lsp.enable({ "lua_ls", "pyright", "svelte", "html", "cssls", "lemminx", "ts_ls", "jsonls", "emmet_language_server" })
 		end,
 	},
 }

@@ -13,7 +13,16 @@ local function notify(message, level)
 end
 
 local function project_root(bufnr)
-	local root = vim.fs.root(bufnr or 0, { "mvnw", "pom.xml", ".git" })
+	local root = vim.fs.root(bufnr or 0, {
+		"gradlew",
+		"mvnw",
+		"pom.xml",
+		"build.gradle",
+		"build.gradle.kts",
+		"settings.gradle",
+		"settings.gradle.kts",
+		".git",
+	})
 	if root and root ~= "" then
 		return root
 	end
@@ -122,6 +131,16 @@ local function java_bundles()
 	return bundles
 end
 
+local function lombok_jar()
+	local jdtls_path = mason_package_path("jdtls")
+	if not jdtls_path then
+		return nil
+	end
+
+	local jar = vim.fs.joinpath(jdtls_path, "lombok.jar")
+	return uv.fs_stat(jar) and jar or nil
+end
+
 local function set_buffer_keymaps(bufnr)
 	local function map(mode, lhs, rhs, desc)
 		vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, silent = true, desc = desc })
@@ -132,10 +151,23 @@ local function set_buffer_keymaps(bufnr)
 		return
 	end
 
+	map("n", "<leader>co", jdtls.organize_imports, "Organize imports")
 	map("n", "<leader>jo", jdtls.organize_imports, "Organize imports")
 	map("n", "<leader>ju", function()
 		jdtls.update_project_config()
 	end, "Refresh Java project")
+	map("n", "<leader>cxv", function()
+		jdtls.extract_variable()
+	end, "Extract variable")
+	map("v", "<leader>cxv", "<Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>", "Extract variable")
+	map("n", "<leader>cxc", function()
+		jdtls.extract_constant()
+	end, "Extract constant")
+	map("v", "<leader>cxc", "<Esc><Cmd>lua require('jdtls').extract_constant(true)<CR>", "Extract constant")
+	map("n", "<leader>cxm", function()
+		jdtls.extract_method()
+	end, "Extract method")
+	map("v", "<leader>cxm", "<Esc><Cmd>lua require('jdtls').extract_method(true)<CR>", "Extract method")
 	map("n", "<leader>jc", function()
 		jdtls.extract_constant()
 	end, "Extract constant")
@@ -229,7 +261,6 @@ function M.setup_jdtls_support()
 	if state.jdtls_support then
 		return
 	end
-	state.jdtls_support = true
 
 	local ok_jdtls, jdtls = pcall(require, "jdtls")
 	if ok_jdtls then
@@ -239,16 +270,8 @@ function M.setup_jdtls_support()
 		pcall(function()
 			jdtls.setup_dap({ hotcodereplace = "auto" })
 		end)
+		state.jdtls_support = true
 	end
-
-	local group = vim.api.nvim_create_augroup("JavaJdtls", { clear = true })
-	vim.api.nvim_create_autocmd("FileType", {
-		group = group,
-		pattern = "java",
-		callback = function(args)
-			M.attach_jdtls(args.buf)
-		end,
-	})
 end
 
 function M.attach_jdtls(bufnr)
@@ -258,8 +281,14 @@ function M.attach_jdtls(bufnr)
 	end
 
 	local root = project_root(bufnr)
+	local lombok = lombok_jar()
+	local cmd = { "jdtls" }
+	if lombok then
+		vim.list_extend(cmd, { "-javaagent:" .. lombok })
+	end
+	vim.list_extend(cmd, { "-Xmx4G", "-data", workspace_dir(root) })
 	local config = {
-		cmd = { "jdtls", "-data", workspace_dir(root) },
+		cmd = cmd,
 		root_dir = root,
 		init_options = {
 			bundles = java_bundles(),
