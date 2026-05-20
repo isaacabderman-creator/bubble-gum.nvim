@@ -5,4 +5,4 @@ opt.tabstop = 2
 opt.softtabstop = 2
 opt.shiftwidth = 2
 
-opt.termguicolors = true  -- ← ADD THIS
+opt.termguicolors = true

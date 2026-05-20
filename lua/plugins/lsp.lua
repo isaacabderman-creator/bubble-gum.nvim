@@ -11,7 +11,16 @@ return {
 			{
 				"WhoIsSethDaniel/mason-tool-installer.nvim",
 				opts = {
-					ensure_installed = { "stylua", "black", "prettier" },
+					ensure_installed = {
+						"stylua",
+						"black",
+						"prettier",
+						"jdtls",
+						"lemminx",
+						"java-debug-adapter",
+						"java-test",
+						"google-java-format",
+					},
 				},
 			},
 		},
@@ -59,6 +68,18 @@ return {
 			vim.lsp.config("emmet_language_server", {
 				capabilities = capabilities,
 				filetypes = { "html", "css" },
+			})
+
+			vim.lsp.config("cssls", {
+				capabilities = capabilities,
+			})
+
+			vim.lsp.config("ts_ls", {
+				capabilities = capabilities,
+			})
+
+			vim.lsp.config("jsonls", {
+				capabilities = capabilities,
 			})
 
 			vim.lsp.config("lemminx", {

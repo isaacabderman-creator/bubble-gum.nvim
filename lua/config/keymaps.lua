@@ -8,7 +8,6 @@ vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename symbol" }
 vim.keymap.set("i", "jk", "<Esc>", { desc = "Exit insert mode with jk" })
 vim.keymap.set("i", "jj", "<Esc>", { desc = "Exit insert mode with jj" })
 
--- add to keymaps.lua
 vim.keymap.set({ "n", "v" }, "<leader>cf", function()
   require("conform").format({ async = true, lsp_fallback = true })
 end, { desc = "Format file/range" })

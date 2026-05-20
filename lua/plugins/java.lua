@@ -1,19 +1,5 @@
 return {
 	{
-		"williamboman/mason.nvim",
-		opts = function(_, opts)
-			opts = opts or {}
-			opts.ensure_installed = opts.ensure_installed or {}
-			vim.list_extend(opts.ensure_installed, {
-				"jdtls",
-				"lemminx",
-				"java-debug-adapter",
-				"java-test",
-				"google-java-format",
-			})
-		end,
-	},
-	{
 		"mfussenegger/nvim-jdtls",
 		dependencies = {
 			"mfussenegger/nvim-dap",
