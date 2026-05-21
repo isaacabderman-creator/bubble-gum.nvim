@@ -17,11 +17,11 @@ return {
       dap.listeners.before.event_terminated["dapui_config"] = dapui.close
       dap.listeners.before.event_exited["dapui_config"] = dapui.close
 
-      vim.keymap.set("n", "<F5>", dap.continue, { desc = "Debugger: Continue" })
-      vim.keymap.set("n", "<F10>", dap.step_over, { desc = "Debugger: Step Over" })
-      vim.keymap.set("n", "<F11>", dap.step_into, { desc = "Debugger: Step Into" })
-      vim.keymap.set("n", "<F12>", dap.step_out, { desc = "Debugger: Step Out" })
-      vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint, { desc = "Debugger: Toggle Breakpoint" })
+      vim.keymap.set("n", "<F5>", dap.continue, { silent = true, desc = "Debugger: Continue" })
+      vim.keymap.set("n", "<F10>", dap.step_over, { silent = true, desc = "Debugger: Step Over" })
+      vim.keymap.set("n", "<F11>", dap.step_into, { silent = true, desc = "Debugger: Step Into" })
+      vim.keymap.set("n", "<F12>", dap.step_out, { silent = true, desc = "Debugger: Step Out" })
+      vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint, { silent = true, desc = "Debugger: Toggle Breakpoint" })
     end,
   },
 }

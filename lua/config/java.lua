@@ -38,14 +38,14 @@ local function maven_executable(root)
   return "mvn"
 end
 
-local function open_terminal(title, cwd, cmd)
+local function open_terminal(title, cwd, argv)
   vim.cmd("botright 16split")
   local buf = vim.api.nvim_get_current_buf()
   vim.bo[buf].bufhidden = "wipe"
   vim.bo[buf].swapfile = false
   vim.bo[buf].buflisted = false
   vim.api.nvim_buf_set_name(buf, title)
-  vim.fn.jobstart(vim.split(cmd, "%s+"), {
+  vim.fn.jobstart(argv, {
     term = true,
     cwd = cwd,
     on_exit = function(_, code)
@@ -59,9 +59,9 @@ local function run_maven(args, opts)
   local root = (opts and opts.cwd) or project_root(0)
   local exe = maven_executable(root)
   local argv = type(args) == "string" and vim.split(args, "%s+", { trimempty = true }) or args
-  local cmd = table.concat(vim.list_extend({ exe }, argv), " ")
   local title = (opts and opts.title) or ("Maven: " .. table.concat(argv, " "))
-  open_terminal(title, root, cmd)
+  local argv = vim.list_extend({ exe }, argv)
+  open_terminal(title, root, argv)
 end
 
 local function input_sequence(fields, on_done)
