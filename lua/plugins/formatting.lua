@@ -12,7 +12,7 @@ return {
         typescript = { "prettier" },
         tsx        = { "prettier" },
       },
-      format_on_save = { timeout_ms = 500, lsp_fallback = true },
+      format_on_save = { timeout_ms = 500, lsp_format = "fallback" },
     })
   end,
 }

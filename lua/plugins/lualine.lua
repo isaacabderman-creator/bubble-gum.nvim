@@ -8,9 +8,10 @@ return {
       options = {
         icons_enabled = true,
         theme = function()
-          local ok, p = pcall(require, "matugen_colors")
+          local use_matugen = os.getenv("NVIM_COLORSCHEME") == "matugen"
+          local ok, p = pcall(require, use_matugen and "matugen_colors" or "tmux_colors")
           if not ok then
-            ok, p = pcall(require, "tmux_colors")
+            ok, p = pcall(require, use_matugen and "tmux_colors" or "matugen_colors")
           end
           if not ok then
             return "auto"
@@ -39,7 +40,6 @@ return {
           statusline = 1000,
           tabline = 1000,
           winbar = 1000,
-          refresh_time = 16, -- ~60fps
         }
       },
       sections = {

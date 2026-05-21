@@ -16,3 +16,4 @@ opt.splitbelow = true
 opt.scrolloff = 8
 opt.clipboard = "unnamedplus"
 opt.undofile = true
+vim.env.PATH = vim.env.PATH .. ":/usr/local/bin" -- remplace par le chemin de `which mvn`

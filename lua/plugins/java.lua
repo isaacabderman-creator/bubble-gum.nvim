@@ -21,7 +21,6 @@ return {
 			return {
 				adapters = {
 					require("neotest-java")({
-						ignore_wrapper = false,
 						incremental_build = true,
 						jvm_args = { "-Xmx512m" },
 						junit_jar = vim.fs.joinpath(vim.fn.stdpath("data"), "neotest-java", "junit-platform-console-standalone.jar"),

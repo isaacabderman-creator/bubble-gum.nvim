@@ -60,7 +60,7 @@ local function run_maven(args, opts)
   local exe = maven_executable(root)
   local argv = type(args) == "string" and vim.split(args, "%s+", { trimempty = true }) or args
   local title = (opts and opts.title) or ("Maven: " .. table.concat(argv, " "))
-  local argv = vim.list_extend({ exe }, argv)
+  argv = vim.list_extend({ exe }, argv)
   open_terminal(title, root, argv)
 end
 
