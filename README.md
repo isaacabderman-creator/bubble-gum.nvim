@@ -7,5 +7,6 @@ It includes the following basic utilities:
 - LSP
 - Oil (file navigation, no neo-tree btw)
 - Conform ( for formatting )
+- Neovide handoff for markdown sessions
 
 Please note that this config is highly opinionated and might not suit everyone.
