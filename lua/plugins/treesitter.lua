@@ -27,7 +27,11 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     config = function()
-      require("nvim-treesitter").setup()
+      require("nvim-treesitter").setup({
+        highlight = { enable = false },
+        indent = { enable = false },
+        auto_install = false,
+      })
 
       local installing = {} ---@type table<string, boolean>
 
@@ -56,8 +60,6 @@ return {
             return
           end
 
-          vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-          vim.wo.foldmethod = "expr"
           vim.bo[bufnr].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
         end,
       })

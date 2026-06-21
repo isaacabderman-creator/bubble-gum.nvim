@@ -24,6 +24,7 @@ return {
       require("mason").setup()
       require("mason-lspconfig").setup({
         ensure_installed = { "lua_ls", "pyright", "svelte", "html", "cssls", "lemminx", "ts_ls", "jsonls", "emmet_language_server" },
+        handlers = { function() end },
       })
 
       vim.api.nvim_create_autocmd("User", {

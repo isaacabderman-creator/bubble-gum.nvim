@@ -4,7 +4,6 @@ return {
     dependencies = {
       "nvim-neotest/nvim-nio",
       "nvim-lua/plenary.nvim",
-      "antoinemadec/FixCursorHold.nvim",
       "nvim-treesitter/nvim-treesitter",
       "rcasia/neotest-java",
     },
@@ -22,14 +21,19 @@ return {
         require("neotest").summary.toggle()
       end, desc = "Toggle Summary" },
       { "<leader>to", function()
-        require("neotest").output.open()
-      end, desc = "Open Output" },
-      { "<leader>tO", function()
         require("neotest").output_panel.toggle()
       end, desc = "Toggle Output Panel" },
     },
     config = function()
-      local adapter = require("neotest-java")({ disable_update_notifications = true })
+      local adapter = require("neotest-java")({
+        disable_update_notifications = true,
+        test_classname_patterns = {
+          "^.*Tests?$",
+          "^.*IT$",
+          "^.*Spec$",
+          "^Test.*$",
+        },
+      })
 
       local root_finder = require("neotest-java.core.root_finder")
       local Path = require("neotest-java.model.path")
