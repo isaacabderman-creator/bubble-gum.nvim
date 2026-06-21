@@ -3,7 +3,7 @@ return {
     "saghen/blink.cmp",
     version = "v1.*",
     lazy = false,
-    build = "cargo build --release",
+    build = "cargo build --release --locked",
     dependencies = {
       "L3MON4D3/LuaSnip",
       "rafamadriz/friendly-snippets",
@@ -18,6 +18,8 @@ return {
         ["<Down>"] = { "select_next", "fallback" },
         ["<C-n>"] = { "select_next", "fallback" },
         ["<C-p>"] = { "select_prev", "fallback" },
+        ["<Tab>"] = { "snippet_forward", "fallback" },
+        ["<S-Tab>"] = { "snippet_backward", "fallback" },
       },
 
       appearance = {

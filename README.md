@@ -6,7 +6,9 @@ It includes the following basic utilities:
 - Tree-sitter
 - LSP
 - Oil (file navigation, no neo-tree btw)
-- Conform ( for formatting )
-- Neovide handoff for markdown sessions
+- Conform (formatting)
+- Gitsigns (git blame/diff)
+- Which-key (keymap discoverability)
+- Neotest (test runner)
 
 Please note that this config is highly opinionated and might not suit everyone.

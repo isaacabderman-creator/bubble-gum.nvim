@@ -9,5 +9,7 @@ vim.keymap.set("i", "jk", "<Esc>", { silent = true, desc = "Exit insert mode wit
 vim.keymap.set("i", "jj", "<Esc>", { silent = true, desc = "Exit insert mode with jj" })
 
 vim.keymap.set({ "n", "v" }, "<leader>cf", function()
-  require("conform").format({ async = true, lsp_format = "fallback" })
+  pcall(function()
+    require("conform").format({ async = true, lsp_format = "fallback" })
+  end)
 end, { silent = true, desc = "Format file/range" })

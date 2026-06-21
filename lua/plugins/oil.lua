@@ -1,8 +1,5 @@
 return {
   "stevearc/oil.nvim",
-  ---@module 'oil'
-  ---@type oil.SetupOpts
-  opts = {},
   -- Optional: Dependencies for icons
   dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function()
