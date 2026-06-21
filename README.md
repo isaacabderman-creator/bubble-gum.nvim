@@ -1,4 +1,4 @@
-# Neovim config with a tmux-synced Material Dark theme
+# bubble-gum.nvim
 
 This is a personal Neovim config that matches the Material Dark palette used by tmux.
 It includes the following basic utilities:
@@ -10,5 +10,8 @@ It includes the following basic utilities:
 - Gitsigns (git blame/diff)
 - Which-key (keymap discoverability)
 - Neotest (test runner)
-
+- Tmux-synced colors
+  
 Please note that this config is highly opinionated and might not suit everyone.
+
+<img src="./image.png" alt="Setup"/>
