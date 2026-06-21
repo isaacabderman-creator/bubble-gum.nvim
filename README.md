@@ -1,6 +1,6 @@
 # bubble-gum.nvim
 
-This is a personal Neovim config that matches the Material Dark palette used by tmux.
+This is a personal Neovim config with bubblegums tones.
 It includes the following basic utilities:
 - Telescope
 - Tree-sitter
