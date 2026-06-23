@@ -117,6 +117,13 @@ return {
           },
         },
       })
+
+      vim.api.nvim_set_hl(0, "NeotestPassed", { fg = colors.success })
+      vim.api.nvim_set_hl(0, "NeotestFailed", { fg = colors.error })
+      vim.api.nvim_set_hl(0, "NeotestRunning", { fg = colors.info })
+      vim.api.nvim_set_hl(0, "NeotestSkipped", { fg = colors.warning })
+      vim.api.nvim_set_hl(0, "NeotestUnknown", { fg = colors.on_surface_variant })
+      vim.api.nvim_set_hl(0, "NeotestBorder", { fg = colors.outline })
     end,
   },
 }
