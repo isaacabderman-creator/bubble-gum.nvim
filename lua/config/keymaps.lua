@@ -5,6 +5,7 @@ vim.keymap.set("n", "K", vim.lsp.buf.hover, { silent = true, desc = "Show docume
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { silent = true, desc = "Code Action" })
 vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { silent = true, desc = "Rename symbol" })
 
+vim.keymap.set("v", "<C-c>", '"+y', { desc = "Yank to system clipboard" })
 vim.keymap.set("i", "jk", "<Esc>", { silent = true, desc = "Exit insert mode with jk" })
 vim.keymap.set("i", "jj", "<Esc>", { silent = true, desc = "Exit insert mode with jj" })
 

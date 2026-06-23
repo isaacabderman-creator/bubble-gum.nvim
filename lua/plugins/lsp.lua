@@ -16,6 +16,7 @@ return {
             "java-debug-adapter",
             "java-test",
             "google-java-format",
+            "tailwindcss-language-server",
           },
         },
       },
@@ -23,7 +24,7 @@ return {
     config = function()
       require("mason").setup()
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "pyright", "svelte", "html", "cssls", "lemminx", "ts_ls", "jsonls", "emmet_language_server" },
+        ensure_installed = { "lua_ls", "pyright", "svelte", "html", "cssls", "lemminx", "ts_ls", "jsonls", "emmet_language_server", "tailwindcss" },
         handlers = { function() end },
       })
 
@@ -52,6 +53,9 @@ return {
         filetypes = { "html", "css" },
       })
       vim.lsp.config("cssls", {})
+      vim.lsp.config("tailwindcss", {
+        filetypes = { "html", "css", "javascript", "typescript", "javascriptreact", "typescriptreact" },
+      })
       vim.lsp.config("ts_ls", {})
       vim.lsp.config("jsonls", {})
       vim.lsp.config("lemminx", {
@@ -59,7 +63,7 @@ return {
         root_markers = { "pom.xml", "build.xml", ".git" },
       })
 
-      vim.lsp.enable({ "lua_ls", "pyright", "svelte", "html", "cssls", "lemminx", "ts_ls", "jsonls", "emmet_language_server" })
+      vim.lsp.enable({ "lua_ls", "pyright", "svelte", "html", "cssls", "lemminx", "ts_ls", "jsonls", "emmet_language_server", "tailwindcss" })
     end,
   },
 }

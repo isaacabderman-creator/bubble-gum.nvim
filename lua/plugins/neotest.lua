@@ -25,6 +25,7 @@ return {
       end, desc = "Toggle Output Panel" },
     },
     config = function()
+      local colors = require("tmux_colors").colors
       local adapter = require("neotest-java")({
         disable_update_notifications = true,
         test_classname_patterns = {
