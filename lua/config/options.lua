@@ -17,3 +17,12 @@ opt.scrolloff = 8
 opt.clipboard = "unnamedplus"
 opt.undofile = true
 vim.env.PATH = vim.env.PATH .. ":/usr/local/bin" -- NOTE: update path to match `which mvn`
+
+vim.api.nvim_create_autocmd({ "FocusLost", "InsertLeave", "TextChanged" }, {
+  pattern = "*",
+  callback = function()
+    if vim.bo.modified and vim.bo.buftype == "" then
+      vim.cmd("silent! write")
+    end
+  end,
+})
