@@ -24,6 +24,34 @@ return {
       },
     },
     config = function()
+      --- Resolve the interpreter pyright should analyse against.
+      ---
+      --- Without this, pyright falls back to whatever `python` is on PATH,
+      --- which silently yields "Import could not be resolved" whenever Neovim
+      --- was launched outside the venv, or the venv lives above the workspace.
+      local function venv_python(root)
+        local active = vim.env.VIRTUAL_ENV
+        if active and active ~= "" then
+          local exe = vim.fs.joinpath(active, "bin", "python")
+          if vim.uv.fs_stat(exe) then
+            return exe
+          end
+        end
+
+        -- vim.fs.parents skips the path itself, so start one level down to
+        -- have the workspace root be the first candidate examined.
+        for dir in vim.fs.parents(vim.fs.joinpath(root or vim.uv.cwd(), "_")) do
+          for _, name in ipairs({ ".venv", "venv", ".env" }) do
+            local exe = vim.fs.joinpath(dir, name, "bin", "python")
+            if vim.uv.fs_stat(exe) then
+              return exe
+            end
+          end
+        end
+
+        return vim.fn.exepath("python3")
+      end
+
       local servers = {
         "lua_ls",
         "pyright",
@@ -62,6 +90,9 @@ return {
         },
       })
 
+      -- No `capabilities` override here: on this Neovim version the built-in
+      -- defaults already advertise what blink.cmp asks for (snippetSupport,
+      -- resolveSupport, labelDetailsSupport), so passing them again is a no-op.
       vim.lsp.config("*", {
         position_encoding = "utf-16",
       })
@@ -74,7 +105,18 @@ return {
       })
       vim.lsp.config("pyright", {
         cmd = { "pyright-langserver", "--stdio" },
-        root_markers = { ".git", "pyproject.toml" },
+        -- Prefer the packaging root over .git: a venv commonly sits beside
+        -- pyproject.toml one level above a nested repo, and pyright only
+        -- auto-discovers venvs inside its workspace.
+        root_markers = {
+          { "pyproject.toml", "uv.lock", "poetry.lock", "setup.py", "setup.cfg", "requirements.txt" },
+          ".git",
+        },
+        before_init = function(_, config)
+          config.settings = config.settings or {}
+          config.settings.python = config.settings.python or {}
+          config.settings.python.pythonPath = venv_python(config.root_dir)
+        end,
         settings = {
           python = {
             analysis = {

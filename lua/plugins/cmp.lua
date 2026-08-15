@@ -31,7 +31,10 @@ return {
         accept = {
           auto_brackets = { enabled = true },
         },
-        documentation = { auto_show = false },
+        -- Surface the signature and parameter docs while browsing the list,
+        -- rather than only on demand behind <C-space>.
+        documentation = { auto_show = true, auto_show_delay_ms = 150 },
+        ghost_text = { enabled = true },
       },
 
       sources = {
