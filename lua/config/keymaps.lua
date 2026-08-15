@@ -81,22 +81,12 @@ vim.keymap.set("v", "<C-c>", '"+y', { desc = "Yank to system clipboard" })
 vim.keymap.set("i", "jk", "<Esc>", { silent = true, desc = "Exit insert mode with jk" })
 vim.keymap.set("i", "jj", "<Esc>", { silent = true, desc = "Exit insert mode with jj" })
 
-local function toggle_comment()
-  local mode = vim.api.nvim_get_mode().mode
-  if mode:match("[vV]") then
-    local start = vim.fn.line("v")
-    local end_ = vim.fn.line(".")
-    if start > end_ then
-      start, end_ = end_, start
-    end
-    require("mini.comment").toggle_lines(start, end_)
-  else
-    local line = vim.fn.line(".")
-    require("mini.comment").toggle_lines(line, line)
-  end
+-- Comment toggling rides Neovim's built-in gc operator, so these are recursive
+-- mappings. <C-_> is what some terminals actually send for <C-/>.
+for _, key in ipairs({ "<C-/>", "<C-_>" }) do
+  vim.keymap.set("n", key, "gcc", { remap = true, silent = true, desc = "Toggle comment" })
+  vim.keymap.set("v", key, "gc", { remap = true, silent = true, desc = "Toggle comment" })
 end
-vim.keymap.set({ "n", "v" }, "<C-/>", toggle_comment, { desc = "Toggle comment" })
-vim.keymap.set({ "n", "v" }, "<C-_>", toggle_comment, { desc = "Toggle comment (alt)" })
 
 vim.keymap.set("n", "<leader>wb", function()
   if vim.fn.executable("elinks") == 0 then
