@@ -25,6 +25,36 @@ return {
       appearance = {
         nerd_font_variant = "mono",
         use_nvim_cmp_as_default = false,
+        -- blink's defaults reuse one glyph across several kinds: Class,
+        -- Interface and Struct all share it, as do Enum/EnumMember/Value and
+        -- Function/Method. These give every kind its own icon.
+        kind_icons = {
+          Class = "󱡠",
+          Color = "󰏘",
+          Constant = "󰏿",
+          Constructor = "",
+          Enum = "󰦨",
+          EnumMember = "󰟢",
+          Event = "󱐋",
+          Field = "󰜢",
+          File = "󰈔",
+          Folder = "󰉋",
+          Function = "󰊕",
+          Interface = "",
+          Keyword = "󰻾",
+          Method = "󰆧",
+          Module = "󰅩",
+          Operator = "󰆕",
+          Property = "󰖷",
+          Reference = "󰬲",
+          Snippet = "󱄽",
+          Struct = "󰆼",
+          Text = "󰉿",
+          TypeParameter = "󰗴",
+          Unit = "󰪚",
+          Value = "󰎠",
+          Variable = "󰀫",
+        },
       },
 
       completion = {
