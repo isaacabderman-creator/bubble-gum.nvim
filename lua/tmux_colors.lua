@@ -8,8 +8,8 @@ M.colors = {
   on_surface = "#eeffff",
   surface_variant = "#424242",
   on_surface_variant = "#c6c6c6",
-  outline = "#757575",
-  outline_variant = "#424242",
+  outline = "#999999",
+  outline_variant = "#6a6a6a",
 
   primary = "#80cbc4",
   on_primary = "#212121",

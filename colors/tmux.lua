@@ -38,8 +38,8 @@ hi("Pmenu", { fg = c.on_surface, bg = c.surface_variant })
 hi("PmenuSel", { fg = c.on_primary, bg = c.primary })
 hi("PmenuSbar", { bg = c.surface })
 hi("PmenuThumb", { bg = c.primary })
-hi("Search", { fg = c.on_background, bg = c.warning })
-hi("IncSearch", { fg = c.on_background, bg = c.info })
+hi("Search", { fg = c.on_primary, bg = c.warning })
+hi("IncSearch", { fg = c.on_primary, bg = c.info })
 hi("Visual", { bg = c.primary_container })
 
 -- Syntax
