@@ -90,6 +90,31 @@ return {
         },
       })
 
+      -- Highlight the symbol under the cursor, and its other references in the
+      -- file, once the cursor rests on it (after 'updatetime'). Cleared as soon
+      -- as the cursor moves off.
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("LspDocumentHighlight", { clear = true }),
+        callback = function(args)
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          if not client or not client:supports_method("textDocument/documentHighlight") then
+            return
+          end
+
+          local group = vim.api.nvim_create_augroup("LspDocumentHighlight" .. args.buf, { clear = true })
+          vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+            group = group,
+            buffer = args.buf,
+            callback = vim.lsp.buf.document_highlight,
+          })
+          vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "BufLeave" }, {
+            group = group,
+            buffer = args.buf,
+            callback = vim.lsp.buf.clear_references,
+          })
+        end,
+      })
+
       -- No `capabilities` override here: on this Neovim version the built-in
       -- defaults already advertise what blink.cmp asks for (snippetSupport,
       -- resolveSupport, labelDetailsSupport), so passing them again is a no-op.

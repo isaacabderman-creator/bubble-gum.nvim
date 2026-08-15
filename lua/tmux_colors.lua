@@ -26,6 +26,13 @@ M.colors = {
   info = "#89ddff",
   error = "#ff5370",
   on_error = "#212121",
+
+  -- Each severity tinted ~18% over the background, for marking spans with a
+  -- fill instead of an underline while keeping the severity readable.
+  error_container = "#492a2f",
+  warning_container = "#49402e",
+  info_container = "#344349",
+  hint_container = "#373737",
 }
 
 return M

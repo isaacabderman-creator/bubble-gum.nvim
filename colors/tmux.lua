@@ -80,8 +80,17 @@ hi("DiagnosticError", { fg = c.error })
 hi("DiagnosticWarn", { fg = c.warning })
 hi("DiagnosticInfo", { fg = c.secondary })
 hi("DiagnosticHint", { fg = c.outline })
-hi("DiagnosticUnderlineError", { undercurl = true, sp = c.error })
-hi("DiagnosticUnderlineWarn", { undercurl = true, sp = c.warning })
+-- Marked with a tinted fill rather than an undercurl.
+hi("DiagnosticUnderlineError", { bg = c.error_container })
+hi("DiagnosticUnderlineWarn", { bg = c.warning_container })
+hi("DiagnosticUnderlineInfo", { bg = c.info_container })
+hi("DiagnosticUnderlineHint", { bg = c.hint_container })
+
+-- Symbol under the cursor and its other references. Deliberately not the same
+-- fill as Visual, so a highlighted symbol never reads as a selection.
+hi("LspReferenceText", { bg = c.surface_variant })
+hi("LspReferenceRead", { bg = c.surface_variant })
+hi("LspReferenceWrite", { bg = c.surface_variant, bold = true })
 
 -- Telescope
 hi("TelescopeNormal", { fg = c.on_surface, bg = c.surface })
