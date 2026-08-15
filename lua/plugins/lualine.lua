@@ -65,7 +65,9 @@ return {
         lualine_c = {
           { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
           { "filename", path = 0, symbols = { modified = "●", readonly = "" } },
-          { breadcrumbs, cond = has_symbols, padding = { left = 0, right = 1 } },
+          -- Left padding sits after lualine's component separator, which
+          -- otherwise butts straight up against the first symbol icon.
+          { breadcrumbs, cond = has_symbols, padding = { left = 2, right = 1 } },
         },
       },
       inactive_winbar = {
