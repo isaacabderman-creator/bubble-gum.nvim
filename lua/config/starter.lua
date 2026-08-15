@@ -18,9 +18,11 @@ local QUOTE = {
   "A lifetime of effort to forge one sword.",
 }
 
+-- Both rows must stay the same character count: the wordmark's horizontal
+-- gradient is indexed per character, so a mismatch would skew row two.
 local WORDMARK = {
-  "█▀▀ ▄▀█ █▄ █ █▀▀   █▄█ █ █ ▄▀█ █▄ █",
-  "█▀  █▀█ █ ▀█ █▄█    █  █▄█ █▀█ █ ▀█",
+  "█▀█ █▀▀ █▀█ █▀▀ █▀▀ █ █ █▀▀ █▀█ ▄▀█ █▄ █ █▀▀ █▀▀",
+  "█▀▀ ██▄ █▀▄ ▄▄█ ██▄ ▀▄▀ ██▄ █▀▄ █▀█ █ ▀█ █▄▄ ██▄",
 }
 
 local ATTRIBUTION = "— Fang Yuan · Reverend Insanity"
