@@ -21,10 +21,12 @@ return {
         telescope = true,
         diffview = true,
       },
+      -- Collapsed/expanded markers. Empty strings would leave the fold state
+      -- of a section unreadable.
       signs = {
-        hunk = { "", "" },
-        item = { "", "" },
-        section = { "", "" },
+        hunk = { "", "" },
+        item = { "", "" },
+        section = { "", "" },
       },
     },
     config = function(_, opts)

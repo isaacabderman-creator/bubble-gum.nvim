@@ -90,6 +90,33 @@ return {
         },
       })
 
+      -- Signs default to the letters E/W/I/H, which sit in the always-on
+      -- signcolumn. severity_sort matters here: without it a line carrying both
+      -- an error and a warning can show the warning's sign.
+      vim.diagnostic.config({
+        severity_sort = true,
+        signs = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = "",
+            [vim.diagnostic.severity.WARN] = "",
+            [vim.diagnostic.severity.INFO] = "",
+            [vim.diagnostic.severity.HINT] = "󰌶",
+          },
+          numhl = {
+            [vim.diagnostic.severity.ERROR] = "DiagnosticError",
+            [vim.diagnostic.severity.WARN] = "DiagnosticWarn",
+            [vim.diagnostic.severity.INFO] = "DiagnosticInfo",
+            [vim.diagnostic.severity.HINT] = "DiagnosticHint",
+          },
+        },
+        float = {
+          border = "rounded",
+          source = true,
+          header = "",
+          prefix = "",
+        },
+      })
+
       -- Highlight the symbol under the cursor, and its other references in the
       -- file, once the cursor rests on it (after 'updatetime'). Cleared as soon
       -- as the cursor moves off.
