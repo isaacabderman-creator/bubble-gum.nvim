@@ -4,6 +4,26 @@ return {
     "nvim-tree/nvim-web-devicons",
   },
   config = function()
+    -- Breadcrumbs come from aerial, which only loads on LspAttach. Note that
+    -- get_location returns a list of symbol tables, not a string, so it has to
+    -- be formatted rather than rendered directly.
+    local function breadcrumbs()
+      local ok, aerial = pcall(require, "aerial")
+      if not ok then
+        return ""
+      end
+
+      local parts = {}
+      for _, symbol in ipairs(aerial.get_location(true) or {}) do
+        parts[#parts + 1] = vim.trim((symbol.icon or "") .. " " .. (symbol.name or ""))
+      end
+      return table.concat(parts, "  ")
+    end
+
+    local function has_symbols()
+      return package.loaded["aerial"] ~= nil and breadcrumbs() ~= ""
+    end
+
     require("lualine").setup({
       options = {
         icons_enabled = true,
@@ -12,7 +32,7 @@ return {
         section_separators = { left = "", right = "" },
         disabled_filetypes = {
           statusline = {},
-          winbar = {},
+          winbar = { "aerial", "trouble", "toggleterm", "starter", "grug-far", "NeogitStatus" },
         },
         ignore_focus = {},
         always_divide_middle = true,
@@ -41,8 +61,19 @@ return {
         lualine_z = {},
       },
       tabline = {},
-      winbar = {},
-      inactive_winbar = {},
+      winbar = {
+        lualine_c = {
+          { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
+          { "filename", path = 0, symbols = { modified = "●", readonly = "" } },
+          { breadcrumbs, cond = has_symbols, padding = { left = 0, right = 1 } },
+        },
+      },
+      inactive_winbar = {
+        lualine_c = {
+          { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
+          { "filename", path = 0, symbols = { modified = "●", readonly = "" } },
+        },
+      },
       extensions = {},
     })
   end,
