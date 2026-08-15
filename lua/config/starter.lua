@@ -1,9 +1,9 @@
 -- Dependency-free start screen.
 --
--- The poem is the hero: it fades in line by line, tinted along a cool gradient,
--- until the closing line ("...to forge one sword") lands in forge-gold and a
--- blade unsheathes beneath it, glowing from cold steel at the hilt to white-hot
--- at the tip.
+-- Two hues carry the whole screen: cold blue heating to gold. The poem is the
+-- hero, fading in line by line while it warms, so the closing line ("...to
+-- forge one sword") arrives at full gold; the blade beneath it continues the
+-- same ramp, from cold steel at the hilt to white-hot at the tip.
 
 local M = {}
 
@@ -32,7 +32,10 @@ local STAGGER = 55 -- delay added per successive row
 local FADE = 260 -- how long a single row takes to reach full color
 local TICK = 16 -- redraw interval (~60fps)
 
-local WHITE_HOT = "#fff6e0"
+-- The screen's two poles; everything gradients between them.
+local COLD = palette.secondary -- blue
+local HOT = palette.warning -- gold
+local WHITE_HOT = "#fff6e0" -- the blade's tip, past gold
 
 local ns = vim.api.nvim_create_namespace("tmux_starter")
 local key_ns = vim.api.nvim_create_namespace("tmux_starter_keys")
@@ -127,23 +130,22 @@ local function compose()
     rows[#rows + 1] = vim.tbl_extend("force", { text = text, colors = colors }, opts or {})
   end
 
-  local mark_colors = ramp({ palette.primary, palette.tertiary }, vim.fn.strchars(WORDMARK[1]))
+  local mark_colors = ramp({ COLD, HOT }, vim.fn.strchars(WORDMARK[1]))
   for _, line in ipairs(WORDMARK) do
     add(line, mark_colors)
   end
   add("")
 
-  -- Cool gradient over the opening lines, then the payoff line in forge-gold.
-  local body = #QUOTE - 1
-  local quote_colors = ramp({ palette.tertiary, palette.secondary, palette.primary }, body)
-  for i = 1, body do
-    add(QUOTE[i], { quote_colors[i] })
+  -- The poem warms as it goes, so the closing line reaches gold on its own.
+  -- Only the weight is special-cased.
+  local quote_colors = ramp({ COLD, HOT }, #QUOTE)
+  for i, line in ipairs(QUOTE) do
+    add(line, { quote_colors[i] }, i == #QUOTE and { bold = true } or nil)
   end
-  add(QUOTE[#QUOTE], { palette.warning }, { bold = true })
   add("")
 
   local edge = blade(46)
-  add(edge, ramp({ palette.outline_variant, palette.error, palette.warning, WHITE_HOT }, vim.fn.strchars(edge)))
+  add(edge, ramp({ palette.outline_variant, COLD, HOT, WHITE_HOT }, vim.fn.strchars(edge)))
   add("")
 
   add(ATTRIBUTION, { palette.outline }, { italic = true })
