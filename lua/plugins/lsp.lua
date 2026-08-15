@@ -41,7 +41,7 @@ return {
         -- vim.fs.parents skips the path itself, so start one level down to
         -- have the workspace root be the first candidate examined.
         for dir in vim.fs.parents(vim.fs.joinpath(root or vim.uv.cwd(), "_")) do
-          for _, name in ipairs({ ".venv", "venv", ".env" }) do
+          for _, name in ipairs({ ".venv", "venv" }) do
             local exe = vim.fs.joinpath(dir, name, "bin", "python")
             if vim.uv.fs_stat(exe) then
               return exe
