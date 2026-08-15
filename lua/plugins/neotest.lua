@@ -8,21 +8,41 @@ return {
       "rcasia/neotest-java",
     },
     keys = {
-      { "<leader>tf", function()
-        require("neotest").run.run(vim.fn.expand("%:p"))
-      end, desc = "Run File Tests" },
-      { "<leader>tr", function()
-        require("neotest").run.run()
-      end, desc = "Run Nearest Test" },
-      { "<leader>tl", function()
-        require("neotest").run.run_last()
-      end, desc = "Run Last Test" },
-      { "<leader>ts", function()
-        require("neotest").summary.toggle()
-      end, desc = "Toggle Summary" },
-      { "<leader>to", function()
-        require("neotest").output_panel.toggle()
-      end, desc = "Toggle Output Panel" },
+      {
+        "<leader>tf",
+        function()
+          require("neotest").run.run(vim.fn.expand("%:p"))
+        end,
+        desc = "Run File Tests",
+      },
+      {
+        "<leader>tr",
+        function()
+          require("neotest").run.run()
+        end,
+        desc = "Run Nearest Test",
+      },
+      {
+        "<leader>tl",
+        function()
+          require("neotest").run.run_last()
+        end,
+        desc = "Run Last Test",
+      },
+      {
+        "<leader>ts",
+        function()
+          require("neotest").summary.toggle()
+        end,
+        desc = "Toggle Summary",
+      },
+      {
+        "<leader>to",
+        function()
+          require("neotest").output_panel.toggle()
+        end,
+        desc = "Toggle Output Panel",
+      },
     },
     config = function()
       local colors = require("tmux_colors").colors

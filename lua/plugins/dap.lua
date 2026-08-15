@@ -6,6 +6,7 @@ return {
       "theHamsta/nvim-dap-virtual-text",
       "nvim-neotest/nvim-nio",
     },
+    keys = { "<F5>", "<F9>", "<F10>", "<F11>", "<F12>", "<leader>b" },
     config = function()
       local dap = require("dap")
       local dapui = require("dapui")
@@ -22,6 +23,46 @@ return {
       vim.keymap.set("n", "<F11>", dap.step_into, { silent = true, desc = "Debugger: Step Into" })
       vim.keymap.set("n", "<F12>", dap.step_out, { silent = true, desc = "Debugger: Step Out" })
       vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint, { silent = true, desc = "Debugger: Toggle Breakpoint" })
+
+      dap.adapters["pwa-node"] = {
+        type = "server",
+        host = "localhost",
+        port = "${port}",
+        executable = {
+          command = "node",
+          args = {
+            vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js",
+            "${port}",
+          },
+        },
+      }
+
+      local function node_configurations(label)
+        return {
+          {
+            type = "pwa-node",
+            request = "launch",
+            name = "Launch" .. label,
+            program = "${file}",
+            cwd = vim.fn.getcwd(),
+            sourceMaps = true,
+            console = "integratedTerminal",
+            outFiles = { "${workspaceFolder}/**/**/*.js" },
+          },
+          {
+            type = "pwa-node",
+            request = "attach",
+            name = "Attach" .. label,
+            port = 9229,
+            cwd = vim.fn.getcwd(),
+            sourceMaps = true,
+            outFiles = { "${workspaceFolder}/**/**/*.js" },
+          },
+        }
+      end
+
+      dap.configurations.javascript = node_configurations("")
+      dap.configurations.typescript = node_configurations(" TS")
     end,
   },
 }
